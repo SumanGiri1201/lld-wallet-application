@@ -1,0 +1,16 @@
+This schema is important as it gives a  structure on how the wallet system will work behind the scene.So,  Instead of putting everything into one place, it keeps  into separate parts like user service, profile service, pass service, and Keycloak for login. This will make it easy to manage each part without affecting the others. It also helps the system to be secure, and easier to update in the future. For example, login details are handled securely by Keycloak and not mixed with other user data. Passes are stored in their own folder, and actions like profile updates can be tracked clearly. This structure not only improves security and performance but also makes the system more convenient if we want to add new features in future.
+
+
+1. It keeps different types of data eparately ( users, profile, passes, keycloak).
+2. Login credentials are handled securely by Keycloak.
+3.Images and files are not stored dorectly in the database only their links are stored, which will help to save space.
+4. Easy to add more additional services for future purpose.
+5. If something goes wrong in one service it wont affet the rest  because everything is separated.
+
+
+
+Reference : 
+https://youtu.be/lWX5mk2adrg?si=yyUymQwwBzuQTc-T
+https://youtu.be/s6m8Aby2at8?si=df0F0M1Z2vTTqYk_
+https://miro.com/diagramming/how-to-design-database-schema
+https://github.com/codeonedigest/springboot-microservice-postgres-db
