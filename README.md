@@ -2,3 +2,6 @@
 
 This is the User Service of a wallet application built with Spring Boot and Keycloak for authentication.  
 It allows user registration, login via Keycloak, viewing all users, and updating user details.
+<img width="1366" height="768" alt="Image" src="https://github.com/user-attachments/assets/36d32940-505a-4817-81dd-61f8a91fdde5" />
+
+<img width="1366" height="768" alt="Image" src="https://github.com/user-attachments/assets/07e9e5ed-9f83-4334-807e-bec17063e5fc" />
