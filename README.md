@@ -9,3 +9,5 @@ It allows user registration, login via Keycloak, viewing all users, and updating
 <img width="1366" height="768" alt="Image" src="https://github.com/user-attachments/assets/c4ed26f0-224b-464e-ae2f-658d762ed999" />
 
 <img width="1366" height="768" alt="Image" src="https://github.com/user-attachments/assets/1cbc660e-ca39-4ea6-ad60-4f09cbca15de" />
+
+<img width="1366" height="768" alt="Image" src="https://github.com/user-attachments/assets/ae2be99f-0ff0-435c-8eab-f47595596137" />
