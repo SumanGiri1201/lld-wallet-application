@@ -14,13 +14,13 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    // View profile using email from Principal
+
     public Optional<User> getProfile(Principal principal) {
         String email = principal.getName(); // Keycloak gives email
         return userRepository.findByEmail(email);
     }
 
-    // Update profile details
+
     public Optional<User> updateProfile(Principal principal, User updatedUser) {
         String email = principal.getName();
         Optional<User> userOptional = userRepository.findByEmail(email);
@@ -38,7 +38,7 @@ public class UserService {
         return Optional.of(user);
     }
 
-    // Delete user profile
+
     public boolean deleteProfile(Principal principal) {
         String email = principal.getName();
         Optional<User> userOptional = userRepository.findByEmail(email);
