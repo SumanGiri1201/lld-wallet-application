@@ -16,14 +16,14 @@ public class ProfileController {
     @Autowired
     private ProfileService profileService;
 
-    // ✅ Create or Update Profile
+
     @PostMapping
     public ResponseEntity<String> createOrUpdateProfile(@RequestBody UpdateProfile request, Principal principal) {
         String response = profileService.createProfile(request, principal);
         return ResponseEntity.ok(response);
     }
 
-    // ✅ Get Profile
+
     @GetMapping("/me")
     public ResponseEntity<UpdateProfile> getProfile(Principal principal) {
         Profile profile = profileService.getProfile(principal);
@@ -31,7 +31,6 @@ public class ProfileController {
             return ResponseEntity.notFound().build();
         }
 
-        // Convert Entity to DTO
         UpdateProfile dto = new UpdateProfile();
         dto.setFullName(profile.getFullName());
         dto.setPhoneNumber(profile.getPhoneNumber());
@@ -40,7 +39,7 @@ public class ProfileController {
         return ResponseEntity.ok(dto);
     }
 
-    // ✅ Delete Profile
+
     @DeleteMapping("/me")
     public ResponseEntity<String> deleteProfile(Principal principal) {
         profileService.deleteProfile(principal);

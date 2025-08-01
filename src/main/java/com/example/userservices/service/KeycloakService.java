@@ -46,7 +46,7 @@ public class KeycloakService {
         try {
             Keycloak keycloak = getAdminKeycloak();
 
-            // Create user
+
             UserRepresentation user = new UserRepresentation();
             user.setUsername(request.getUsername());
             user.setEmail(request.getEmail());

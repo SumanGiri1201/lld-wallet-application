@@ -8,7 +8,7 @@ public class Profile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String keycloakId; // ✅ ADD THIS LINE
+    private String keycloakId;
     private String fullName;
     private String phoneNumber;
     private String pincode;
@@ -17,7 +17,7 @@ public class Profile {
     @JoinColumn(name = "user_id")
     private User user;
 
-    // Getters and Setters
+
     public Long getId() {
         return id;
     }

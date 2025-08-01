@@ -27,13 +27,12 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    // ✅ Registration method
+
     public String register(RegisterRequest request) {
         try {
             Keycloak keycloak = keycloakService.getAdminKeycloak();
             UsersResource usersResource = keycloak.realm(keycloakService.getUserRealm()).users();
 
-            // Create user in Keycloak
             UserRepresentation user = new UserRepresentation();
             user.setUsername(request.getEmail());
             user.setEmail(request.getEmail());
@@ -50,10 +49,9 @@ public class UserService {
                 return "Failed to register in Keycloak: " + response.getStatus();
             }
 
-            // Optional: save to local DB
             User newUser = new User();
             newUser.setEmail(request.getEmail());
-            newUser.setPassword(request.getPassword()); // 🔐 Optional: hash this
+            newUser.setPassword(request.getPassword());
             userRepository.save(newUser);
 
             return "Registration successful";
@@ -63,21 +61,20 @@ public class UserService {
         }
     }
 
-    // ✅ Login method
     public String login(LoginRequest request) {
         String tokenUrl = "http://localhost:8080/auth/realms/digital-wallet-realm/protocol/openid-connect/token";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 
-        // Create request body
+
         Map<String, String> params = new HashMap<>();
         params.put("grant_type", "password");
         params.put("client_id", "wallet-client-user");
         params.put("username", request.getEmail());
         params.put("password", request.getPassword());
 
-        // Convert to URL encoded string
+
         StringBuilder formBody = new StringBuilder();
         for (Map.Entry<String, String> entry : params.entrySet()) {
             if (formBody.length() > 0) formBody.append("&");
@@ -90,7 +87,7 @@ public class UserService {
         try {
             ResponseEntity<String> response = restTemplate.postForEntity(tokenUrl, entity, String.class);
             if (response.getStatusCode().is2xxSuccessful()) {
-                return response.getBody(); // return entire token JSON
+                return response.getBody();
             } else {
                 return "Login failed: " + response.getStatusCode();
             }

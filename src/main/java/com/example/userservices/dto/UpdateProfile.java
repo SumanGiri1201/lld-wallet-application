@@ -5,7 +5,6 @@ public class UpdateProfile {
     private String phoneNumber;
     private String pincode;
 
-    // Getters and Setters
     public String getFullName() {
         return fullName;
     }

@@ -5,7 +5,7 @@ public class RegisterRequest {
     private String email;
     private String password;
 
-    // ✅ Getter and Setter for username
+
     public String getUsername() {
         return username;
     }
@@ -14,7 +14,6 @@ public class RegisterRequest {
         this.username = username;
     }
 
-    // ✅ Getter and Setter for email
     public String getEmail() {
         return email;
     }
@@ -23,7 +22,7 @@ public class RegisterRequest {
         this.email = email;
     }
 
-    // ✅ Getter and Setter for password
+
     public String getPassword() {
         return password;
     }
