@@ -18,8 +18,6 @@ public class Profile {
     @JoinColumn(name = "user_id")
     private User user;
 
-    // --- Constructors ---
-
     public Profile() {
     }
 
@@ -29,8 +27,6 @@ public class Profile {
         this.address = address;
         this.user = user;
     }
-
-    // --- Getters & Setters ---
 
     public Long getId() {
         return id;
