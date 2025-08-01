@@ -23,8 +23,6 @@ public class User {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private Profile profile;
-
-    // ✅ Constructors
     public User() {}
 
     public User(String fullName, String email, String phone, String address) {
@@ -34,7 +32,7 @@ public class User {
         this.address = address;
     }
 
-    // ✅ Getters and Setters
+
     public String getId() {
         return id;
     }
