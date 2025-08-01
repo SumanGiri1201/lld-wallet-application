@@ -1,27 +1,24 @@
 package com.example.userservices.controller;
 
 import com.example.userservices.dto.RegisterRequest;
-import com.example.userservices.dto.LoginRequest;
 import com.example.userservices.service.KeycloakService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/auth")
 public class Authcontroller {
 
-    @Autowired
-    private KeycloakService keycloakService;
+    private final KeycloakService keycloakService;
 
-    @PostMapping("/register")
-    public String register(@RequestBody RegisterRequest request) {
-        return keycloakService.registerUser(request);
+    public Authcontroller(KeycloakService keycloakService) {
+        this.keycloakService = keycloakService;
     }
 
-    @PostMapping("/login")
-    public String login(@RequestBody LoginRequest request) {
-        return keycloakService.loginUser(request);
-
-
+    @PostMapping("/register")
+    public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
+        System.out.println("Registering user: " + request.getEmail());
+        String result = keycloakService.registerUser(request);
+        return ResponseEntity.ok(result);
     }
 }

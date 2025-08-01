@@ -1,12 +1,11 @@
 package com.example.userservices.service;
 
-import com.example.userservices.dto.LoginRequest;
 import com.example.userservices.dto.RegisterRequest;
+import jakarta.ws.rs.core.Response;
 import org.keycloak.OAuth2Constants;
 import org.keycloak.admin.client.Keycloak;
 import org.keycloak.admin.client.KeycloakBuilder;
 import org.keycloak.admin.client.resource.UsersResource;
-import org.keycloak.representations.AccessTokenResponse;
 import org.keycloak.representations.idm.CredentialRepresentation;
 import org.keycloak.representations.idm.UserRepresentation;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,22 +20,15 @@ public class KeycloakService {
     private String serverUrl;
 
     @Value("${keycloak.realm}")
-    private String realm;
+    private String userRealm; // digital-wallet-realm
 
-    @Value("${keycloak.resource}")
-    private String clientId;
-
-    @Value("${keycloak.credentials.secret}")
-    private String clientSecret;
-
-    @Value("${keycloak-admin.username}")
+    @Value("${keycloak.admin.username}")
     private String adminUsername;
 
-    @Value("${keycloak-admin.password}")
+    @Value("${keycloak.admin.password}")
     private String adminPassword;
 
-
-    private Keycloak getAdminKeycloak() {
+    public Keycloak getAdminKeycloak() {
         return KeycloakBuilder.builder()
                 .serverUrl(serverUrl)
                 .realm("master")
@@ -46,52 +38,42 @@ public class KeycloakService {
                 .grantType(OAuth2Constants.PASSWORD)
                 .build();
     }
-
-    public String registerUser(RegisterRequest request) {
-        return createUser(request.getUsername(), request.getPassword(), request.getEmail());
+    public String getUserRealm() {
+        return userRealm;
     }
 
-    public String createUser(String username, String password, String email) {
+    public String registerUser(RegisterRequest request) {
         try {
             Keycloak keycloak = getAdminKeycloak();
-            UsersResource usersResource = keycloak.realm(realm).users();
 
+            // Create user
             UserRepresentation user = new UserRepresentation();
-            user.setUsername(username);
-            user.setEmail(email);
+            user.setUsername(request.getUsername());
+            user.setEmail(request.getEmail());
             user.setEnabled(true);
 
             CredentialRepresentation credentials = new CredentialRepresentation();
-            credentials.setType(CredentialRepresentation.PASSWORD);
-            credentials.setValue(password);
             credentials.setTemporary(false);
+            credentials.setType(CredentialRepresentation.PASSWORD);
+            credentials.setValue(request.getPassword());
 
             user.setCredentials(Collections.singletonList(credentials));
 
-            usersResource.create(user);
+            UsersResource usersResource = keycloak.realm(userRealm).users();
+            Response response = usersResource.create(user);
 
-            return "Registration successful";
+            System.out.println("Keycloak status: " + response.getStatus());
+            System.out.println("Keycloak message: " + response.readEntity(String.class));
+
+            if (response.getStatus() == 201) {
+                return "User registered successfully";
+            } else {
+                return "Failed to register user: " + response.getStatusInfo().getReasonPhrase();
+            }
+
         } catch (Exception e) {
-            return "Registration failed: " + e.getMessage();
-        }
-    }
-
-    public String loginUser(LoginRequest request) {
-        try {
-            Keycloak keycloak = KeycloakBuilder.builder()
-                    .serverUrl(serverUrl)
-                    .realm(realm)
-                    .grantType(OAuth2Constants.PASSWORD)
-                    .clientId(clientId)
-                    .clientSecret(clientSecret)
-                    .username(request.getUsername())
-                    .password(request.getPassword())
-                    .build();
-
-            AccessTokenResponse tokenResponse = keycloak.tokenManager().getAccessToken();
-            return tokenResponse.getToken();
-        } catch (Exception e) {
-            return "Login failed: " + e.getMessage();
+            e.printStackTrace();
+            return "Exception during registration: " + e.getMessage();
         }
     }
 }

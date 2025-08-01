@@ -1,50 +1,29 @@
 package com.example.userservices.dto;
 
 public class UpdateProfile {
-    private String name;
-    private String gender;
-    private String address;
-    private String dob; // Accept string and parse in backend
+    private String fullName;
+    private String phoneNumber;
+    private String pincode;
 
-    public UpdateProfile() {}
-
-    public UpdateProfile(String name, String gender, String address, String dob) {
-        this.name = name;
-        this.gender = gender;
-        this.address = address;
-        this.dob = dob;
+    // Getters and Setters
+    public String getFullName() {
+        return fullName;
+    }
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
     }
 
-    public String getName() {
-        return name;
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getPincode() {
+        return pincode;
     }
-
-    public String getGender() {
-        return gender;
-    }
-
-    public void setGender(String gender) {
-        this.gender = gender;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getDob() {
-        return dob;
-    }
-
-    public void setDob(String dob) {
-        this.dob = dob;
+    public void setPincode(String pincode) {
+        this.pincode = pincode;
     }
 }
-
